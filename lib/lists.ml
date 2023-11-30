@@ -10,3 +10,8 @@ let rec last_two list =
   | [] | [ _ ] -> None
   | [ x; y ] -> Some (x, y)
   | _ :: t -> last_two t;;
+
+let rec nth k list =
+  match list with
+  | [] -> None
+  | h :: t -> if k = 0 then Some h else nth (k-1) t;;
