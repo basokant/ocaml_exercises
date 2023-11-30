@@ -53,3 +53,10 @@ let nth_tests = "test suite for Lists.nth" >::: [
 ]
 
 let _ = run_test_tt_main nth_tests
+
+let length_tests = "test suite for Lists.length" >::: [
+  "empty" >:: (fun _ -> assert_equal (Lists.length []) 0);
+  "non-empty" >:: (fun _ -> assert_equal (Lists.length ["a"; "b"; "c"]) 3)
+]
+
+let _ = run_test_tt_main length_tests
