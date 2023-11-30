@@ -84,3 +84,10 @@ let flatten_tests = "test suite for Lists.flatten" >::: [
 ]
 
 let _ = run_test_tt_main flatten_tests
+
+let compress_tests = "test suite for Lists.compress" >::: [
+  "empty" >:: (fun _ -> assert_equal (Lists.compress []) []);
+  "non-empty" >:: (fun _ -> assert_bool "the compressed list was not equal" (Lists.equal (Lists.compress ["a"; "a"; "b"; "c"; "c"; "d"]) ["a"; "b"; "c"; "d"]))
+]
+
+let _ = run_test_tt_main compress_tests

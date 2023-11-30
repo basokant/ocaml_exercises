@@ -45,6 +45,7 @@ type 'a node =
   | One of 'a 
   | Many of 'a node list
 
+(** Flatten a nested list structure *)
 let flatten (list: 'a node list): 'a list =
   let rec aux acc list =
     match list with
@@ -53,3 +54,9 @@ let flatten (list: 'a node list): 'a list =
     | Many l :: t -> aux (aux acc l) t
   in
   rev (aux [] list)
+
+(** Eliminate consecutive duplicates of list elements *)
+let rec compress (list: 'a list): 'a list =
+  match list with
+  | a :: (b :: _ as t) -> if a = b then compress t else a :: compress t
+  | smaller -> smaller;;
