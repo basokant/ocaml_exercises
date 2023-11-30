@@ -34,19 +34,19 @@ let last_two_tests = "test suite for Lists.last_two" >::: [
 let _ = run_test_tt_main last_two_tests
 
 let nth_tests = "test suite for Lists.nth" >::: [
-  "empty" >:: (fun _ -> assert_equal None (Lists.nth 1 []));
+  "empty" >:: (fun _ -> assert_equal None (Lists.nth [] 1));
   "singleton" >:: (
-    fun _ -> match Lists.nth 0 ["a"] with
+    fun _ -> match Lists.nth ["a"] 0 with
     | Some x -> assert_equal x "a"
     | None -> assert_failure "None was found, 'a' was expected"
   );
   "non-empty" >:: (
-    fun _ -> match Lists.nth 3 ["a"; "b"; "c"; "d"; "e"] with
+    fun _ -> match Lists.nth ["a"; "b"; "c"; "d"; "e"] 3 with
     | Some x -> assert_equal x "d"
     | None -> assert_failure "None was found, 'd' was expected"
   );
   "out of bounds" >:: (
-    fun _ -> match Lists.nth 3 ["a", "b"] with
+    fun _ -> match Lists.nth ["a"; "b"] 3 with
     | Some _ -> assert_failure "Some x was found, None was expected"
     | None -> ()
   )
@@ -60,3 +60,10 @@ let length_tests = "test suite for Lists.length" >::: [
 ]
 
 let _ = run_test_tt_main length_tests
+
+let rev_tests = "test suite for Lists.rev" >::: [
+  "empty" >:: (fun _ -> assert_equal (Lists.rev []) []);
+  "non-empty" >:: (fun _ -> assert_equal (List.compare compare (Lists.rev ["a"; "b"; "c"]) ["c"; "b"; "a"]) 0)
+]
+
+let _ = run_test_tt_main rev_tests
