@@ -63,7 +63,7 @@ let _ = run_test_tt_main length_tests
 
 let rev_tests = "test suite for Lists.rev" >::: [
   "empty" >:: (fun _ -> assert_equal (Lists.rev []) []);
-  "non-empty" >:: (fun _ -> assert_equal (List.compare compare (Lists.rev ["a"; "b"; "c"]) ["c"; "b"; "a"]) 0)
+  "non-empty" >:: (fun _ -> assert_bool "the reverse list was not equal" (Lists.equal (Lists.rev ["a"; "b"; "c"]) ["c"; "b"; "a"]));
 ]
 
 let _ = run_test_tt_main rev_tests
@@ -75,3 +75,12 @@ let palindrome_tests = "test suite for Lists.is_palindrome" >::: [
 ]
 
 let _ = run_test_tt_main palindrome_tests
+
+let flatten_tests = "test suite for Lists.flatten" >::: [
+  "empty" >:: (fun _ -> assert_equal (Lists.flatten []) []);
+  "non-empty" >:: (fun _ -> assert_bool "the flattened list was not equal" (
+    Lists.equal (Lists.flatten [One "a"; Many [One "b"; Many [One "c" ;One "d"]; One "e"]]) ["a"; "b"; "c"; "d"; "e"]
+  ))
+]
+
+let _ = run_test_tt_main flatten_tests

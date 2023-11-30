@@ -33,11 +33,23 @@ let rec rev (list: 'a list): 'a list =
   | h :: t -> (rev t) @ [h];;
 
 (** Find out if two lists are equal *)
-let rec equal (l1: 'a list) (l2: 'a list): bool =
-  match (l1, l2) with
-  | [], [] -> true
-  | h1 :: t1, h2 :: t2 -> h1 = h2 && equal t1 t2
-  | _, _ -> false
+let equal (l1: 'a list) (l2: 'a list): bool =
+  match List.compare compare l1 l2 with
+  | 0 -> true
+  | _ -> false
 
 (** Find out whether a list is a palindrome *)
 let is_palindrome (list: 'a list): bool = equal list (rev list)
+
+type 'a node =
+  | One of 'a 
+  | Many of 'a node list
+
+let flatten (list: 'a node list): 'a list =
+  let rec aux acc list =
+    match list with
+    | [] -> acc
+    | One x :: t -> aux (x :: acc) t
+    | Many l :: t -> aux (aux acc l) t
+  in
+  rev (aux [] list)
