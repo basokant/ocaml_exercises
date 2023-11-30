@@ -67,3 +67,11 @@ let rev_tests = "test suite for Lists.rev" >::: [
 ]
 
 let _ = run_test_tt_main rev_tests
+
+let palindrome_tests = "test suite for Lists.is_palindrome" >::: [
+  "empty" >:: (fun _ -> assert_equal (Lists.is_palindrome []) true);
+  "non-empty palindrome" >:: (fun _ -> assert_equal (Lists.is_palindrome [1; 2; 1]) true);
+  "non-empty non-palindrome" >:: (fun _ -> assert_equal (Lists.is_palindrome [1; 2; 3; 1]) false);
+]
+
+let _ = run_test_tt_main palindrome_tests

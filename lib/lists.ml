@@ -30,4 +30,14 @@ let length (list: 'a list): int =
 let rec rev (list: 'a list): 'a list =
   match list with
   | [] -> []
-  | h :: t -> (rev t) @ [h]
+  | h :: t -> (rev t) @ [h];;
+
+(** Find out if two lists are equal *)
+let rec equal (l1: 'a list) (l2: 'a list): bool =
+  match (l1, l2) with
+  | [], [] -> true
+  | h1 :: t1, h2 :: t2 -> h1 = h2 && equal t1 t2
+  | _, _ -> false
+
+(** Find out whether a list is a palindrome *)
+let is_palindrome (list: 'a list): bool = equal list (rev list)
